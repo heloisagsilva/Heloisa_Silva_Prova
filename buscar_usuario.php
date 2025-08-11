@@ -31,3 +31,37 @@ if(is_numeric($busca)){
 $stmt->execute();
 $usuarios= $stmt-> fetchAll(PDO:: FETCH_ASSOC);
 ?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Usuario</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h2> Lista de Usuarios </h2>
+    <form action="buscar_usuario.php" method="POST">
+        <label for="busca"> Digite o ID ou NOME(opcional): </label>
+        <input type="text" id="busca" name="busca">
+    </form>
+    <?php if(!empty($usuarios)):?>
+        <table>
+            <tr>
+                <th> ID </th>
+                <th> NOME </th>
+                <th> EMAIL </th>
+                <th> PERFIL </th>
+                <th> AÇÕES </th>
+            </tr>
+            <?php foreach($usuarios as $usuario):?>
+            <tr>
+                <td> <?htmlspecialchars($usuario['id_usuario'])?></td>
+                <td> <?htmlspecialchars($usuario['nome'])?></td>
+                <td> <?htmlspecialchars($usuario['email'])?></td>
+                <td> <?htmlspecialchars($usuario['id_perfil'])?></td>
+            </tr>
+        </table>
+</body>
+</html>
