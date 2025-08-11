@@ -40,9 +40,26 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
 <body>
     <h2> Cadastrar Usuario </h2>
     <form action="cadastro_usuario.php" method="POST">
-    
+        <label for="nome"> Nome: </label>
+        <input type="text" id="nome" name="nome" required>
 
+        <label for="senha"> Senha: </label>
+        <input type="password" id="senha" name="senha" required>
 
-    </form>
+        <label for="email"> Email: </label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="id_perfil"> Perfil: </label>
+        <select id="id_perfil" name="id_perfil">
+            <option value="1"> Administrador </option>
+            <option value="2"> Secretária </option>
+            <option value="3"> Almoxarife </option>
+            <option value="4"> Cliente </option>
+        </select>
+
+    <button type="submit"> Salvar </button>
+    <button type="reset"> Cancelar </button>
+</form>
+    <a href="principal.php"> Voltar </a>
 </body>
 </html>
