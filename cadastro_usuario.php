@@ -13,12 +13,12 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
     $senha= password_hash($_POST['nome'], PASSWORD_DEFAULT);
     $id_perfil= $_POST['id_perfil'];
 
-    $sql= "INSERT INTO usuario (nome, email, senha, id_perfil) VALUES (:nome, :email, :senha, :id_email)";
+    $sql= "INSERT INTO usuario (nome, email, senha, id_perfil) VALUES (:nome, :email, :senha, :id_perfil)";
     $stmt= $pdo-> prepare($sql);
-    $stmt= bindParam(':nome', $nome);
-    $stmt= bindParam(':email', $email);
-    $stmt= bindParam(':senha', $senha);
-    $stmt= bindParam(':id_perfil', $id_perfil);
+    $stmt-> bindParam(':nome', $nome);
+    $stmt-> bindParam(':email', $email);
+    $stmt-> bindParam(':senha', $senha);
+    $stmt-> bindParam(':id_perfil', $id_perfil);
 
     if($stmt-> execute()){
         echo "<script> ('Usuario cadastrado com sucesso!!');</script";
@@ -43,11 +43,11 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
         <label for="nome"> Nome: </label>
         <input type="text" id="nome" name="nome" required>
 
-        <label for="senha"> Senha: </label>
-        <input type="password" id="senha" name="senha" required>
-
         <label for="email"> Email: </label>
         <input type="email" id="email" name="email" required>
+
+        <label for="senha"> Senha: </label>
+        <input type="password" id="senha" name="senha" required>
 
         <label for="id_perfil"> Perfil: </label>
         <select id="id_perfil" name="id_perfil">

@@ -66,7 +66,7 @@
 <body>
     <header>
         <div class="saudacao">
-            <h2> Bem-Vindo, <?php echo $_SESSION['usuario']?>! Perfil: <?php echo $nome_perfil ?> </h2>
+            <h2> Bem-Vindo,<?php echo $_SESSION['usuario']?>! Perfil: <?php echo $nome_perfil ?> </h2>
         </div>
 
         <div class="logout">
