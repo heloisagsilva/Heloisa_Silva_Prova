@@ -48,6 +48,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Recuperar Senha </title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 </head>
 <body>
     <h2> Alterar Senha </h2>
@@ -60,11 +61,9 @@
         <label for="confirmar_senha"> Confirmar Senha: </label>
         <input type="password" id="confirmar_senha" name="confirmar_senha" required />
 
-        <label>
-            <input type="checkbox" onclick="mostrarSenha()"> Mostrar Senha
-        </label>
+        <label> <input type="checkbox" onclick="mostrarSenha()"> Mostrar Senha </label>
 
-        <button type="submit"> Salvar nova senha </button>
+        <button type="submit" class="btn btn-outline-primary"> Salvar nova senha </button>
     </form>
 
     <script>

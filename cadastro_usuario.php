@@ -36,9 +36,10 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro Usuario</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 </head>
 <body>
-    <h2> Cadastrar Usuario </h2>
+    <h2 align="center"> Cadastrar Usuario </h2>
     <form action="cadastro_usuario.php" method="POST">
         <label for="nome"> Nome: </label>
         <input type="text" id="nome" name="nome" required>
@@ -56,10 +57,10 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
             <option value="3"> Almoxarife </option>
             <option value="4"> Cliente </option>
         </select>
-
-    <button type="submit"> Salvar </button>
-    <button type="reset"> Cancelar </button>
+<br>
+    <button type="submit" class="btn btn-outline-success"> Salvar </button> <br>
+    <button type="reset" class="btn btn-outline-danger"> Cancelar </button>
 </form>
-    <a href="principal.php"> Voltar </a>
+<a href="principal.php" class="btn btn-outline-primary">Voltar</a>
 </body>
 </html>
