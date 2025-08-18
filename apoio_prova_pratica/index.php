@@ -60,4 +60,10 @@
 
     <p><a href="recuperar_senha.php"> Esqueci a minha senha </a></p>
 </body>
+<br>
+<adress>
+    <center>
+        Heloisa Gonçalves da Silva/ Desenvolvimento de Sistemas
+    </center>
+</adress>
 </html>

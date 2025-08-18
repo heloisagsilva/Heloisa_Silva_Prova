@@ -1,6 +1,7 @@
 <?php
 session_start();
 require ('conexao.php');
+require_once ('permissoes.php');
 
 // Verifica se o usuário tem permissão de adm
 if($_SESSION['perfil'] != 1){
@@ -44,6 +45,27 @@ if(isset($_GET['id']) && is_numeric($_GET['id'])){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 </head>
 <body>
+
+<nav>
+        <ul class="menu">
+            <?php foreach($opcoes_menu as $categoria => $arquivos) { ?>
+                <li class="dropdown">
+                    <a href="#"><?= $categoria ?></a>
+
+                    <ul class="dropdown-menu">
+                        <?php foreach($arquivos as $arquivo) { ?>
+                            <li>   
+                                <a href="<?= $arquivo ?>"><?= ucfirst(str_replace("_", " ", basename($arquivo, ".php"))) ?></a>
+                            </li>
+                        <?php } ?>
+                    </ul>
+                </li>
+            <?php } ?>
+        </ul>
+    </nav>
+<br>
+    <a href="principal.php" class="btn btn-outline-primary">Voltar</a>
+
     <h1 align="center"> Excluir usuario </h2>
     <br><br>
     <?php if (!empty($usuarios)): ?>
@@ -72,7 +94,13 @@ if(isset($_GET['id']) && is_numeric($_GET['id'])){
         <?php else:?>
             <p> Nenhum usuario encontrado</p>
         <?php endif;?>
+        
 <br>
-<a href="principal.php" class="btn btn-outline-primary">Voltar</a>
 </body>
+<br>
+<adress>
+    <center>
+        Heloisa Gonçalves da Silva/ Desenvolvimento de Sistemas
+    </center>
+</adress>
 </html>

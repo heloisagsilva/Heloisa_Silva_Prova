@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once('conexao.php');
+require_once ('permissoes.php');
 
 // Verifica se o usuário tem permissão de adm
 if($_SESSION['perfil'] != 1){
@@ -47,6 +48,27 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <title>Alterar usuário</title>
 </head>
 <body>
+
+<nav>
+        <ul class="menu">
+            <?php foreach($opcoes_menu as $categoria => $arquivos) { ?>
+                <li class="dropdown">
+                    <a href="#"><?= $categoria ?></a>
+
+                    <ul class="dropdown-menu">
+                        <?php foreach($arquivos as $arquivo) { ?>
+                            <li>   
+                                <a href="<?= $arquivo ?>"><?= ucfirst(str_replace("_", " ", basename($arquivo, ".php"))) ?></a>
+                            </li>
+                        <?php } ?>
+                    </ul>
+                </li>
+            <?php } ?>
+        </ul>
+    </nav>
+<br>
+    <a href="principal.php" class="btn btn-outline-primary">Voltar</a>
+
      <h2 align="center">Alterar usuário</h2>
 
      <form action="alterar_usuario.php" method="POST">
@@ -89,7 +111,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
            <button type="reset" class="btn btn-outline-danger">Cancelar</button>
        </form>
      <?php endif; ?>
-
-     <a href="principal.php"class="btn btn-outline-primary">Voltar</a>
 </body>
+<br>
+<adress>
+    <center>
+        Heloisa Gonçalves da Silva/ Desenvolvimento de Sistemas
+    </center>
+</adress>
 </html>
