@@ -13,13 +13,11 @@
         $nova_senha = $_POST['nova_senha'];
         $confirmar_senha = $_POST['confirmar_senha'];
 
-        // VERIFICA SE AS SENHAS COINCIDEM
+        // VERIFICA SE AS SENHAS COINCIDEM E SE SÃO 8 DÍGITOS NUMÉRICOS
         if ($nova_senha !== $confirmar_senha) {
             echo "<script>alert('As senhas não coincidem!');</script>";
-        } elseif (strlen($nova_senha) < 8) {
-            echo "<script>alert('A senha deve ter pelo menos 8 caractéres!');</script>";
-        } elseif ($nova_senha === "temp123") {
-            echo "<script>alert('Escolha uma senha diferente de temporária!');</script>";
+        } elseif (!preg_match('/^\d{8}$/', $nova_senha)) {
+            echo "<script>alert('A senha deve conter exatamente 8 números.');</script>";
         } else {
             $senha_hash = password_hash($nova_senha, PASSWORD_DEFAULT);
 
@@ -28,9 +26,8 @@
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':senha', $senha_hash);
             $stmt->bindParam(':id', $id_usuario);
-            $stmt->execute();
-
-            if ($stmt->execute()) {
+            $ok = $stmt->execute();
+            if ($ok) {
                 session_destroy();
                 echo "<script>alert('Senha alterada com sucesso! Faça login novamente.');window.location.href='index.php';</script>";
             } else {
@@ -56,10 +53,10 @@
 
     <form action="alterar_senha.php" method="POST">
         <label for="nova_senha"> Nova Senha: </label>
-        <input type="password" id="nova_senha" name="nova_senha" required />
+        <input type="password" id="nova_senha" name="nova_senha" required pattern="\d{8}" minlength="8" maxlength="8" title="Exatamente 8 números" />
 
         <label for="confirmar_senha"> Confirmar Senha: </label>
-        <input type="password" id="confirmar_senha" name="confirmar_senha" required />
+        <input type="password" id="confirmar_senha" name="confirmar_senha" required pattern="\d{8}" minlength="8" maxlength="8" title="Exatamente 8 números" />
 
         <label> <input type="checkbox" onclick="mostrarSenha()"> Mostrar Senha </label>
 

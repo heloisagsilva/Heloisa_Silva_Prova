@@ -9,18 +9,31 @@ if($_SESSION['perfil'] != 1){
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $id_usuario = $_POST['id_usuario'];
-    $nome = $_POST['nome'];
+    $nome = trim($_POST['nome']);
     $email = $_POST['email'];
     $id_perfil = $_POST['id_perfil'];
-    $nova_senha = !empty($_POST['nova_senha'])? 
-    password_hash($_POST['nova_senha'],PASSWORD_DEFAULT): null;
+    $nova_senha_plain = !empty($_POST['nova_senha']) ? $_POST['nova_senha'] : null;
+    $nova_senha = null;
+    if ($nova_senha_plain !== null) {
+        if (!preg_match('/^\d{8}$/', $nova_senha_plain)) {
+            echo "<script>alert('A nova senha deve conter exatamente 8 números.');window.location.href='alterar_usuario.php?id=$id_usuario';</script>";
+            exit();
+        }
+        $nova_senha = password_hash($nova_senha_plain, PASSWORD_DEFAULT);
+    }
+
+    // Validação do nome: apenas letras e espaços
+    if (!preg_match('/^[A-Za-zÀ-ÿ\s]+$/', $nome)) {
+        echo "<script>alert('O nome deve conter apenas letras.');window.location.href='alterar_usuario.php?id=$id_usuario';</script>";
+        exit();
+    }
 
     // Atualiza os dados do usuário
     if($nova_senha){
         $sql = "UPDATE usuario SET nome=:nome, email=:email, id_perfil=:id_perfil, senha=:senha
                 WHERE id_usuario = :id";
         $stmt = $pdo -> prepare($sql);
-        $stmt -> bindParam(':senha',$nova_senha,PDO::PARAM_INT);
+        $stmt -> bindParam(':senha',$nova_senha);
     } else{
         $sql = "UPDATE usuario SET nome=:nome, email=:email, id_perfil=:id_perfil
                 WHERE id_usuario = :id";

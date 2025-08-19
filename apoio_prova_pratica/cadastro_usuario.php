@@ -9,23 +9,31 @@ if($_SESSION['perfil']!=1){
 }
 
 if($_SERVER['REQUEST_METHOD']== 'POST'){
-    $nome= $_POST['nome'];
-    $email= $_POST['email'];
-    $senha= password_hash($_POST['nome'], PASSWORD_DEFAULT);
-    $id_perfil= $_POST['id_perfil'];
+    $nome = trim($_POST['nome']);
+    $email = trim($_POST['email']);
+    $senha_plain = $_POST['senha'];
+    $id_perfil = $_POST['id_perfil'];
 
-    $sql= "INSERT INTO usuario (nome, email, senha, id_perfil) VALUES (:nome, :email, :senha, :id_perfil)";
-    $stmt= $pdo-> prepare($sql);
-    $stmt-> bindParam(':nome', $nome);
-    $stmt-> bindParam(':email', $email);
-    $stmt-> bindParam(':senha', $senha);
-    $stmt-> bindParam(':id_perfil', $id_perfil);
+    // Validações servidor: nome apenas letras e espaços; senha com exatamente 8 números
+    if (!preg_match('/^[A-Za-zÀ-ÿ\s]+$/', $nome)) {
+        echo "<script>alert('O nome deve conter apenas letras.');</script>";
+    } elseif (!preg_match('/^\d{8}$/', $senha_plain)) {
+        echo "<script>alert('A senha deve conter exatamente 8 números.');</script>";
+    } else {
+        $senha = password_hash($senha_plain, PASSWORD_DEFAULT);
 
-    if($stmt-> execute()){
-        echo "<script> ('Usuario cadastrado com sucesso!!');</script";
-    }
-    else{
-        echo "<script> alert('Erro ao encontrar usuario');</script>";
+        $sql = "INSERT INTO usuario (nome, email, senha, id_perfil) VALUES (:nome, :email, :senha, :id_perfil)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':nome', $nome);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':senha', $senha);
+        $stmt->bindParam(':id_perfil', $id_perfil);
+
+        if ($stmt->execute()) {
+            echo "<script>alert('Usuário cadastrado com sucesso!');</script>";
+        } else {
+            echo "<script>alert('Erro ao cadastrar usuário.');</script>";
+        }
     }
 }
 ?>
@@ -64,13 +72,13 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
     <h2 align="center"> Cadastrar Usuario </h2>
     <form action="cadastro_usuario.php" method="POST">
         <label for="nome"> Nome: </label>
-        <input type="text" id="nome" name="nome" required>
+        <input type="text" id="nome" name="nome" required pattern="[A-Za-zÀ-ÿ\s]+" title="Apenas letras e espaços">
 
         <label for="email"> Email: </label>
         <input type="email" id="email" name="email" required>
 
         <label for="senha"> Senha: </label>
-        <input type="password" id="senha" name="senha" required>
+        <input type="password" id="senha" name="senha" required pattern="\d{8}" minlength="8" maxlength="8" title="Exatamente 8 números">
 
         <label for="id_perfil"> Perfil: </label>
         <select id="id_perfil" name="id_perfil">

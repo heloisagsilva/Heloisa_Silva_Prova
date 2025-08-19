@@ -88,7 +88,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
            <label for="nome">Nome:</label>
            <input type="text" id="nome" name="nome" 
-           value="<?= htmlspecialchars($usuario['nome']) ?>" required>
+           value="<?= htmlspecialchars($usuario['nome']) ?>" required pattern="[A-Za-zÀ-ÿ\s]+" title="Apenas letras e espaços">
 
            <label for="email">Email:</label>
            <input type="email" id="email "name="email" 
@@ -104,7 +104,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
        <!--Se o usuário logado for adm, exibir opção de alterar senha-->
        <?php if($_SESSION['perfil'] == 1): ?>
            <label for="nova_senha">Nova senha</label>
-           <input type="password" id="nova_senha" name="nova_senha">
+           <input type="password" id="nova_senha" name="nova_senha" pattern="\d{8}" minlength="8" maxlength="8" title="Exatamente 8 números">
        <?php endif; ?>
 <br>
            <button type="submit" class="btn btn-outline-success">Alterar</button> <br>
