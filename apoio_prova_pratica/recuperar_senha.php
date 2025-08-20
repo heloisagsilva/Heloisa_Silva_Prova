@@ -47,7 +47,7 @@ else{
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 </head>
 <body>
-    <h2> Recuperar Senha </h2>
+    <h2 align="center"> Recuperar Senha </h2>
     <form action= "recuperar_senha.php" method="POST">
         <label for="email">Digite seu email cadastrado:</label>
         <input type="email" id="email" name="email" required>

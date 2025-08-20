@@ -17,8 +17,8 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
     // Validações servidor: nome apenas letras e espaços; senha com exatamente 8 números
     if (!preg_match('/^[A-Za-zÀ-ÿ\s]+$/', $nome)) {
         echo "<script>alert('O nome deve conter apenas letras.');</script>";
-    } elseif (!preg_match('/^\d{8}$/', $senha_plain)) {
-        echo "<script>alert('A senha deve conter exatamente 8 números.');</script>";
+    } elseif (!preg_match('/^[A-Za-z0-9]{8}$/', $senha_plain)) {
+        echo "<script>alert('A senha deve conter exatamente 8 caracteres (letras e/ou números).');</script>";
     } else {
         $senha = password_hash($senha_plain, PASSWORD_DEFAULT);
 
@@ -78,7 +78,7 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
         <input type="email" id="email" name="email" required>
 
         <label for="senha"> Senha: </label>
-        <input type="password" id="senha" name="senha" required pattern="\d{8}" minlength="8" maxlength="8" title="Exatamente 8 números">
+        <input type="password" id="senha" name="senha" required pattern="[A-Za-z0-9]{8}" minlength="8" maxlength="8" title="Exatamente 8 caracteres (letras e/ou números)">
 
         <label for="id_perfil"> Perfil: </label>
         <select id="id_perfil" name="id_perfil">

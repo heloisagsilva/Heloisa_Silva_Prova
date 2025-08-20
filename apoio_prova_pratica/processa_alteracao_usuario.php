@@ -15,8 +15,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $nova_senha_plain = !empty($_POST['nova_senha']) ? $_POST['nova_senha'] : null;
     $nova_senha = null;
     if ($nova_senha_plain !== null) {
-        if (!preg_match('/^\d{8}$/', $nova_senha_plain)) {
-            echo "<script>alert('A nova senha deve conter exatamente 8 números.');window.location.href='alterar_usuario.php?id=$id_usuario';</script>";
+        if (!preg_match('/^[A-Za-z0-9]{8}$/', $nova_senha_plain)) {
+            echo "<script>alert('A nova senha deve conter exatamente 8 caracteres (letras e/ou números).');window.location.href='alterar_usuario.php?id=$id_usuario';</script>";
             exit();
         }
         $nova_senha = password_hash($nova_senha_plain, PASSWORD_DEFAULT);

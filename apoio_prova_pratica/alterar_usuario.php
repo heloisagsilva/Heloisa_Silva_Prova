@@ -104,7 +104,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
        <!--Se o usuário logado for adm, exibir opção de alterar senha-->
        <?php if($_SESSION['perfil'] == 1): ?>
            <label for="nova_senha">Nova senha</label>
-           <input type="password" id="nova_senha" name="nova_senha" pattern="\d{8}" minlength="8" maxlength="8" title="Exatamente 8 números">
+           <input type="password" id="nova_senha" name="nova_senha" pattern="[A-Za-z0-9]{8}" minlength="8" maxlength="8" title="Exatamente 8 caracteres (letras e/ou números)">
        <?php endif; ?>
 <br>
            <button type="submit" class="btn btn-outline-success">Alterar</button> <br>

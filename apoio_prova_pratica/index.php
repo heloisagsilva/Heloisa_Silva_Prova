@@ -53,7 +53,7 @@
         <input type="email" id="email" name="email" required />
 
         <label for="senha"> Senha: </label>
-        <input type="password" id="senha" name="senha" required />
+        <input type="password" id="senha" name="senha" required pattern="[A-Za-z0-9]{8}" minlength="8" maxlength="8" title="Exatamente 8 caracteres (letras e/ou números)" />
 
         <button type="submit"> Entrar </button>
     </form>
