@@ -140,7 +140,14 @@ label {
 }
 
 /* Ajusta os campos de entrada */
+<<<<<<< Updated upstream:styles.css
 input {
+=======
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+>>>>>>> Stashed changes:apoio_prova_pratica/styles.css
     width: 80%; /* Ocupa toda a largura do formulário */
     padding: 8px;
     margin-bottom: 10px;
