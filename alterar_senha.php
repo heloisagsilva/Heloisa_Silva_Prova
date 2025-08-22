@@ -1,0 +1,82 @@
+<?php
+    session_start();
+    require_once 'conexao.php';
+
+    //GARANTE QUE O USUÁRIO ESTEJA LOGADO
+    if (!isset($_SESSION['id_usuario'])) {
+        echo "<script>alert('Acesso Negado!');window.location.href='index.php';</script>";
+        exit();
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $id_usuario = $_SESSION['id_usuario'];
+        $nova_senha = $_POST['nova_senha'];
+        $confirmar_senha = $_POST['confirmar_senha'];
+
+        // VERIFICA SE AS SENHAS COINCIDEM E SE SÃO 8 DÍGITOS NUMÉRICOS
+        if ($nova_senha !== $confirmar_senha) {
+            echo "<script>alert('As senhas não coincidem!');</script>";
+        } elseif (!preg_match('/^[A-Za-z0-9]{8}$/', $nova_senha)) {
+            echo "<script>alert('A senha deve conter exatamente 8 caracteres (letras e/ou números).');</script>";
+        } else {
+            $senha_hash = password_hash($nova_senha, PASSWORD_DEFAULT);
+
+            // ATUALIZA A SENHA E REMOVE O STATUS DA TEMPORÁRIA
+            $sql = "UPDATE usuario SET senha = :senha, senha_temporaria = FALSE WHERE id_usuario = :id";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':senha', $senha_hash);
+            $stmt->bindParam(':id', $id_usuario);
+            $ok = $stmt->execute();
+            if ($ok) {
+                session_destroy();
+                echo "<script>alert('Senha alterada com sucesso! Faça login novamente.');window.location.href='index.php';</script>";
+            } else {
+                echo "<script>alert('Erro ao alterar a senha!');</script>";
+            }
+        }
+    }
+?>
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Recuperar Senha </title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+</head>
+<body>
+    <h2 align="center"> Alterar Senha </h2>
+    <p align="center"> Olá, <strong><?php echo $_SESSION['usuario']?></strong> Digite sua nova senha abaixo: </p>
+
+    <form action="alterar_senha.php" method="POST">
+        <label for="nova_senha"> Nova Senha: </label>
+        <input type="password" id="nova_senha" name="nova_senha" required pattern="[A-Za-z0-9]{8}" minlength="8" maxlength="8" title="Exatamente 8 caracteres (letras e/ou números)" />
+
+        <label for="confirmar_senha"> Confirmar Senha: </label>
+        <input type="password" id="confirmar_senha" name="confirmar_senha" required pattern="[A-Za-z0-9]{8}" minlength="8" maxlength="8" title="Exatamente 8 caracteres (letras e/ou números)" />
+
+        <label> <input type="checkbox" onclick="mostrarSenha()"> Mostrar Senha </label>
+
+        <button type="submit" class="btn btn-outline-primary"> Salvar nova senha </button>
+    </form>
+
+    <script>
+        function mostrarSenha() {
+            var senha1 = document.getElementById("nova_senha");
+            var senha2 = document.getElementById("confirmar_senha");
+            var tipo = senha1.type === "password" ? "text" : "password";
+            senha1.type = tipo;
+            senha2.type = tipo;
+        }
+    </script>
+</body>
+<br>
+<adress>
+    <center>
+        Heloisa Gonçalves da Silva/ Desenvolvimento de Sistemas
+    </center>
+</adress>
+</html>
